@@ -44,12 +44,13 @@ class MainActivity : ComponentActivity() {
             var todoText by remember { mutableStateOf(TextFieldValue("")) }
 
             TestTaskTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->(
+                Scaffold(modifier = Modifier.fillMaxSize().statusBarsPadding()) { innerPadding ->(
                         Column(
                             modifier = Modifier.fillMaxSize().padding(innerPadding)
-                        ) {
+                        )
+                        {
                             Row(
-                                modifier = Modifier.statusBarsPadding().fillMaxWidth().padding(16.dp)
+                                modifier = Modifier.fillMaxWidth().padding(16.dp)
                             ) {
                                 TextTODOField (
                                     modifier = Modifier.weight(1f),
@@ -82,7 +83,7 @@ fun FilledButton(onClick: () -> Unit, modifier: Modifier = Modifier){
         onClick = onClick,
         modifier = modifier
     ){
-        Text(text = "Add")
+        Text(text = "Додати")
     }
 }
 
@@ -91,7 +92,7 @@ fun TextTODOField(modifier: Modifier = Modifier, value: TextFieldValue, onValueC
     TextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = {Text(text = "Write TODO")},
+        placeholder = {Text(text = "Напишіть завдання")},
         modifier = modifier
     )
 }
@@ -104,14 +105,16 @@ data class Task(
 @Composable
 fun TaskRow(tasks: Task){
     Text(
-        text = "Task: ${tasks.title}",
+        text = "Завдання : ${tasks.title}",
         modifier = Modifier.padding(8.dp)
     )
 }
 
 @Composable
 fun TaskList(tasks: List<Task>){
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.padding(15.dp)
+    ) {
         items(tasks){
             task -> TaskRow(task)
         }
